@@ -15,8 +15,9 @@ function M.filepath()
   local base_path = vim.fn.stdpath("state") .. "/neogit/"
   local filename = "state"
 
-  base_path = base_path:gsub("/", "\\")
-  filename = filename:gsub("\\", "%%")
+  if config.values.use_per_project_settings then
+    filename = vim.loop.cwd():gsub("/", "%%")
+  end
 
   return Path:new(base_path .. filename)
 end
