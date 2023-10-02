@@ -15,14 +15,8 @@ function M.filepath()
   local base_path = vim.fn.stdpath("state") .. "/neogit/"
   local filename = "state"
 
-  if config.values.use_per_project_settings then
-    filename = vim.loop.cwd():gsub("/", "%%")
-  end
-
-  if vim.loop.os_uname().sysname == "Windows_NT" then
-    base_path = base_path:gsub("/", "\\")
-    filename = filename:gsub("\\", "%%")
-  end
+  base_path = base_path:gsub("/", "\\")
+  filename = filename:gsub("\\", "%%")
 
   return Path:new(base_path .. filename)
 end
