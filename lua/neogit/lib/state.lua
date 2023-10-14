@@ -1,6 +1,7 @@
 local logger = require("neogit.logger")
 local config = require("neogit.config")
 local Path = require("plenary.path")
+local fs = require("neogit.lib.fs")
 
 local M = {}
 
@@ -12,14 +13,14 @@ end
 
 ---@return Path
 function M.filepath()
-  local base_path = vim.fn.stdpath("state") .. "/neogit/"
+  local base_path = fs.stdpath("state") .. "/neogit/"
   local filename = "state"
 
   if config.values.use_per_project_settings then
-    filename = vim.loop.cwd()
+    filename = fs.cwd()
       :gsub("^(%a):", "/%1")
       :gsub("/", "%%")
-      :gsub(Path.path.sep, "%%")
+      :gsub(fs.sep(), "%%")
   end
 
   return Path:new(base_path .. filename)
